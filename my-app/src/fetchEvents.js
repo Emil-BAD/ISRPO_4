@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function fetchEvents(citySlug = "msk", query = "") {
   const actualSinceDate = Math.floor(new Date("2025-04-06T00:00:00").getTime() / 1000);
-  const baseUrl = "https://kudago.com/public-api/v1.4"; // Базовый URL API
+  const baseUrl = "https://cors-anywhere.herokuapp.com/https://kudago.com/public-api/v1.4"; // Базовый URL API
 
   const retryRequest = async (attempts = 3, delay = 1000) => {
     for (let i = 0; i < attempts; i++) {
