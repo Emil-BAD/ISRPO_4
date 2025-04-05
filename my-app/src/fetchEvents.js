@@ -2,11 +2,12 @@ import axios from "axios";
 
 export async function fetchEvents(citySlug = "msk", query = "") {
   const actualSinceDate = Math.floor(new Date("2025-04-06T00:00:00").getTime() / 1000);
+  const baseUrl = "https://kudago.com/public-api/v1.4"; // Базовый URL API
 
   const retryRequest = async (attempts = 3, delay = 1000) => {
     for (let i = 0; i < attempts; i++) {
       try {
-        const response = await axios.get("/api/events/", {
+        const response = await axios.get(`${baseUrl}/events/`, {
           params: {
             location: citySlug,
             expand: "place,images",
@@ -14,7 +15,6 @@ export async function fetchEvents(citySlug = "msk", query = "") {
             actual_since: actualSinceDate,
           },
         });
-
         let events = response.data.results || [];
         if (query.trim()) {
           const lowerQuery = query.trim().toLowerCase();
@@ -35,7 +35,6 @@ export async function fetchEvents(citySlug = "msk", query = "") {
       }
     }
   };
-
   try {
     return await retryRequest();
   } catch (err) {
